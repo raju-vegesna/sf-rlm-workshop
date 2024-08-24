@@ -13,24 +13,24 @@ echo "ValueStream:" $valueStream
 # Use value stream to set enviroment variables 
 case $valueStream in
    "/VSA")
-        CLIENT_ID=$SFDC_CLIENTID
-        USER=$SFDC_USER
+        CLIENT_ID=$SFDC_CLIENTID_CI1
+        USER=$SFDC_USER_CI1
         echo "Sandbox: CI1"
         ;;
    "/VSB")
-        CLIENT_ID=$SFDC_CLIENTID_CI1
-        USER=$SFDC_USER_CI1
+        CLIENT_ID=$SFDC_CLIENTID_CI2
+        USER=$SFDC_USER_CI2
         echo "Sandbox: CI2"
         ;;
     "/VSC")
-        CLIENT_ID=$SFDC_CLIENTID_CI2
-        USER=$SFDC_USER_CI2
+        CLIENT_ID=$SFDC_CLIENTID_CI3
+        USER=$SFDC_USER_CI3
         echo "Sandbox: CI3"
         ;;
      *) 
-        CLIENT_ID=$SFDC_CLIENTID_CI3
-        USER=$SFDC_USER_CI3
-        echo "Sandbox: CI4"
+        CLIENT_ID=$SFDC_CLIENTID
+        USER=$SFDC_USER
+        echo "Sandbox: CI"
         ;;
 esac
 

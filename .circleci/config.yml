@@ -6,7 +6,8 @@ jobs:
     executor: sfdx/default
     steps:
       - checkout
-      - sfdx/install
+      - sfdx/install:
+          version: "latest"
       - run:
           name: Login to Sandbox
           command: . build/auth.sh
@@ -18,7 +19,8 @@ jobs:
     executor: sfdx/default
     steps:
       - checkout
-      - sfdx/install
+      - sfdx/install:
+          version: "latest"
       - run:
           name: Login & Validate to Sandbox
           no_output_timeout: 90m
@@ -27,7 +29,8 @@ jobs:
     executor: sfdx/default
     steps:
       - checkout
-      - sfdx/install
+      - sfdx/install:
+          version: "latest"
       - run:
           name: Login to Sandbox
           command: . build/auth.sh
@@ -51,7 +54,7 @@ workflows:
   deploy-uat:
     jobs:
       - deploy:
-          context: Salesforce UAT1
+          context: Salesforce UAT
           filters:
             branches:
               only:
