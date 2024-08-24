@@ -1,0 +1,120 @@
+version: 2.1
+orbs:
+    sfdx: circleci/salesforce-sfdx@2.2.0
+jobs:
+  validate:
+    executor: sfdx/default
+    steps:
+      - checkout
+      - sfdx/install
+      - run:
+          name: Login to Sandbox
+          command: . build/auth.sh
+      - run:
+          name: Validate to Sandbox
+          no_output_timeout: 60m
+          command: . build/validate.sh
+  validate-ci:
+    executor: sfdx/default
+    steps:
+      - checkout
+      - sfdx/install
+      - run:
+          name: Login & Validate to Sandbox
+          no_output_timeout: 90m
+          command: . build/auth_validate.sh
+  deploy:
+    executor: sfdx/default
+    steps:
+      - checkout
+      - sfdx/install
+      - run:
+          name: Login to Sandbox
+          command: . build/auth.sh
+      - run:
+          name: Deploy to Sandbox
+          no_output_timeout: 60m
+          command: . build/deploy.sh
+workflows:
+  validate:
+    jobs:
+      - validate-ci:
+          context: Salesforce CI
+  deploy-qa:
+    jobs:
+      - deploy:
+          context: Salesforce QA
+          filters:
+            branches:
+              only:
+                - integration/qa
+  deploy-uat:
+    jobs:
+      - deploy:
+          context: Salesforce UAT1
+          filters:
+            branches:
+              only:
+                - integration/uat
+  deploy-preprod:
+    jobs:
+      - hold:
+          type: approval
+          filters:
+            branches:
+              only:
+                - main
+      - deploy:
+          context: Salesforce PREPROD
+          requires:
+            - hold
+  deploy-prod:
+    jobs:
+      - validate:
+          context: Salesforce PROD
+          filters:
+            tags:
+              only:
+                - /(v[0-9]*\.[0-9])/
+            branches:
+              ignore: /.*/
+      - hold:
+          type: approval
+          requires:
+            - validate
+          filters:
+            tags:
+              only:
+                - /(v[0-9]*\.[0-9])/
+            branches:
+              ignore: /.*/
+      - deploy:
+          context: Salesforce PROD
+          requires:
+            - hold
+          filters:
+            tags:
+              only:
+                - /(v[0-9]*\.[0-9])/
+            branches:
+              ignore: /.*/
+      - deploy:
+          context: Salesforce QA
+          requires:
+            - hold
+          filters:
+            tags:
+              only:
+                - /(v[0-9]*\.[0-9])/
+            branches:
+              ignore: /.*/
+      - deploy:
+          context: Salesforce DMIGRATION
+          requires:
+            - hold
+          filters:
+            tags:
+              only:
+                - /(v[0-9]*\.[0-9])/
+            branches:
+              ignore: /.*/
