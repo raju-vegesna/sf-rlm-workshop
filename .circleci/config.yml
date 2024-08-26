@@ -42,11 +42,11 @@ workflows:
   validate:
     jobs:
       - validate-ci:
-          context: Salesforce CI
+          context: RLM SF CI
   deploy-qa:
     jobs:
       - deploy:
-          context: Salesforce QA
+          context: RLM SF QA
           filters:
             branches:
               only:
@@ -54,7 +54,7 @@ workflows:
   deploy-uat:
     jobs:
       - deploy:
-          context: Salesforce UAT
+          context: RLM SF UAT
           filters:
             branches:
               only:
@@ -68,13 +68,13 @@ workflows:
               only:
                 - main
       - deploy:
-          context: Salesforce PREPROD
+          context: RLM SF PREPROD
           requires:
             - hold
   deploy-prod:
     jobs:
       - validate:
-          context: Salesforce PROD
+          context: RLM SF PROD
           filters:
             tags:
               only:
@@ -92,7 +92,7 @@ workflows:
             branches:
               ignore: /.*/
       - deploy:
-          context: Salesforce PROD
+          context: RLM SF PROD
           requires:
             - hold
           filters:
@@ -102,7 +102,7 @@ workflows:
             branches:
               ignore: /.*/
       - deploy:
-          context: Salesforce QA
+          context: RLM SF QA
           requires:
             - hold
           filters:
@@ -112,7 +112,7 @@ workflows:
             branches:
               ignore: /.*/
       - deploy:
-          context: Salesforce DMIGRATION
+          context: RLM SF DATAMIG
           requires:
             - hold
           filters:
