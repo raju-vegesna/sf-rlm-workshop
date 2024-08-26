@@ -5,4 +5,5 @@ echo $SFDC_SERVER_KEY | base64 -d > keys/server.key
 
 # Authenticate to salesforce
 echo "Authenticating..."
-sfdx force:auth:jwt:grant --clientid $SFDC_CLIENTID --jwtkeyfile keys/server.key --username $SFDC_USER --instanceurl $SFDC_INSTANCE_URL
+# sfdx force:auth:jwt:grant --client-id $SFDC_CLIENTID --jwtkey-file keys/server.key --username $SFDC_USER --instance-url $SFDC_INSTANCE_URL
+sf org login jwt --client-id=$SFDC_CLIENTID --jwt-key-file=keys/server.key --username=$SFDC_USER --instance-url=$SFDC_INSTANCE_URL

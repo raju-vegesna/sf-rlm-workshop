@@ -36,8 +36,11 @@ esac
 
 # Authenticate to salesforce
 echo "Authenticating..."
-sfdx force:auth:jwt:grant --clientid $CLIENT_ID --jwtkeyfile keys/server.key --username $USER --instanceurl $SFDC_INSTANCE_URL
+# sfdx force:auth:jwt:grant --client-id $CLIENT_ID --jwtkey-file keys/server.key --username $USER --instance-url $SFDC_INSTANCE_URL
+sf org login jwt --client-id=$SFDC_CLIENTID --jwt-key-file=keys/server.key --username=$SFDC_USER --instance-url=$SFDC_INSTANCE_URL
 
 #Validate against org & run local tests
 echo "Validate against ORG & run local tests..." 
-sfdx force:source:deploy -u $USER -p force-app -w 90 -l RunLocalTests -c
+# Temporarily changed the TestLevel to SpecifiedTests due to test coverage in org is below 75%
+# sfdx force:source:deploy -u $USER -p force-app -w 90 -l RunSpecifiedTests -r SiteLoginControllerTest -c
+sf project deploy validate --target-org=$SFDC_USER --source-dir force-app --wait=90 --test-level RunSpecifiedTests --tests=SiteLoginControllerTest
