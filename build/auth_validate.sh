@@ -35,7 +35,7 @@ case $valueStream in
 esac
 
 # Authenticate to salesforce
-echo "Authenticating..."
+echo "Authenticating with ... " $SFDC_USER 
 # sfdx force:auth:jwt:grant --client-id $CLIENT_ID --jwtkey-file keys/server.key --username $USER --instance-url $SFDC_INSTANCE_URL
 sf org login jwt --client-id=$SFDC_CLIENTID --jwt-key-file=keys/server.key --username=$SFDC_USER --instance-url=$SFDC_INSTANCE_URL
 
