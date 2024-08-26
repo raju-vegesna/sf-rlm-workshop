@@ -5,10 +5,10 @@ orbs:
 
 jobs:
   validate:
-    executor: sfdx/default
+    executor: salesforce/default
     steps:
       - checkout
-      - sfdx/install:
+      - salesforce/install:
           version: "latest"
       - run:
           name: Login to Sandbox
@@ -18,20 +18,20 @@ jobs:
           no_output_timeout: 60m
           command: . build/validate.sh
   validate-ci:
-    executor: sfdx/default
+    executor: salesforce/default
     steps:
       - checkout
-      - sfdx/install:
+      - salesforce/install:
           version: "latest"
       - run:
           name: Login & Validate to Sandbox
           no_output_timeout: 90m
           command: . build/auth_validate.sh
   deploy:
-    executor: sfdx/default
+    executor: salesforce/default
     steps:
       - checkout
-      - sfdx/install:
+      - salesforce/install:
           version: "latest"
       - run:
           name: Login to Sandbox
