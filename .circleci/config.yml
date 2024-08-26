@@ -1,6 +1,8 @@
 version: 2.1
 orbs:
-    sfdx: circleci/salesforce-sfdx@2.2.0
+    # sfdx: circleci/salesforce-sfdx@2.2.0
+    salesforce: jsc/salesforce@2.1.0
+
 jobs:
   validate:
     executor: sfdx/default
