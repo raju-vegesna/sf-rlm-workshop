@@ -42,5 +42,5 @@ sf org login jwt --client-id=$SFDC_CLIENTID --jwt-key-file=keys/server.key --use
 #Validate against org & run local tests
 echo "Validate against ORG & run local tests..." 
 # Temporarily changed the TestLevel to SpecifiedTests due to test coverage in org is below 75%
-# sfdx force:source:deploy -u $USER -p force-app -w 90 -l RunSpecifiedTests -r SiteLoginControllerTest -c
-sf project deploy validate --target-org=$SFDC_USER --source-dir force-app --wait=90 --test-level RunSpecifiedTests --tests=SiteLoginControllerTest
+sfdx force:source:deploy -u $USER -p force-app -w 90 -l RunSpecifiedTests -r SiteLoginControllerTest -c
+# sf project deploy validate --target-org=$SFDC_USER --source-dir force-app --wait=90 --test-level RunSpecifiedTests --tests=SiteLoginControllerTest

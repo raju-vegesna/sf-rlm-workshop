@@ -1,14 +1,13 @@
 version: 2.1
 orbs:
-    # sfdx: circleci/salesforce-sfdx@2.2.0
-    salesforce: jsc/salesforce@2.1.0
+    sfdx: circleci/salesforce-sfdx@2.2.0
 
 jobs:
   validate:
-    executor: salesforce/default
+    executor: sfdx/default
     steps:
       - checkout
-      - salesforce/install:
+      - sfdx/install:
           version: "latest"
       - run:
           name: Login to Sandbox
@@ -18,20 +17,20 @@ jobs:
           no_output_timeout: 60m
           command: . build/validate.sh
   validate-ci:
-    executor: salesforce/default
+    executor: sfdx/default
     steps:
       - checkout
-      - salesforce/install:
+      - sfdx/install:
           version: "latest"
       - run:
           name: Login & Validate to Sandbox
           no_output_timeout: 90m
           command: . build/auth_validate.sh
   deploy:
-    executor: salesforce/default
+    executor: sfdx/default
     steps:
       - checkout
-      - salesforce/install:
+      - sfdx/install:
           version: "latest"
       - run:
           name: Login to Sandbox
